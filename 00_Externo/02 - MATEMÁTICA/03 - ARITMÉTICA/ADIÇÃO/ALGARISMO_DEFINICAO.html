@@ -1,0 +1,131 @@
+<html>
+    
+    <head>
+        
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">       
+    </head>
+    
+    <body onload='letra(&apos;corpo&apos;);'
+        style="
+            font:normal 120% verdana,arial,helvetica;
+            width: 100%; height: 100%; padding: 0; margin: 0;
+        " 
+    >      
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+-0
+-1
+-2
+- #### CORPO FIM #### --> 
+<!-- 
+-0
+-1
+-2    
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--> 
+        <div id="corpo">
+            
+            <h1 align="center" style="font:bold 150% verdana,arial,helvetica;">Matemática - Adição - Algarismo </h1>
+            
+            <!--  -->
+            <div style="margin-left: 20px;
+                 font:normal 100% verdana,arial,helvetica;
+                 ">  
+            <!--  -->    
+                <p>Algarismo são os símbolos numéricos utilizados para representar qualquer número.</p>
+                                            
+                <p>O sistema de numeração decimal possui dez algarismos, que são:</p>
+                <ul>
+                    <li> 
+                        <p><b>0, 1, 2, 3, 4, 5, 6, 7, 8, 9.</b>
+                        </p>
+                    </li>
+                </ul>
+            
+                <p>Com esses algarismos, é possível escrever qualquer número.</p>
+                
+                <div style="width: 100%;">  
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0"> 
+                        <tr><td align="center">
+                                <img width="278" height="188" title="De Zero a Nove" 
+                                     src="ALGARISMO_DEFINICAO_IMAGENS/de_zero_a_nove.png">  
+                        </td></tr>
+                    </table>
+                </div>
+                
+                <h2 style="font:bold 120% verdana,arial,helvetica; color:#8080FF;">Diferença entre Número e Algarismo:</h2>
+
+                <ul>
+                    <li> 
+                        <p><b>Número:</b>
+                            <br>
+                            Número é a ideia de quantidade que nos vem à mente quando contamos, ordenamos 
+                            e medimos. Assim, estamos pensando em números quando contamos as portas de um 
+                            automóvel, enumeramos a posição de uma pessoa numa fila ou medimos o peso de 
+                            uma caixa.
+                        </p>
+                    </li>
+                    <li> 
+                        <p><b>Algarismo:</b>
+                            <br>
+                            Algarismo é todo símbolo numérico que usamos para formar os numerais escritos.
+                        </p>
+                    </li>
+                </ul>
+                
+                <p>&nbsp;</p>
+
+            <!--  -->
+            </div>
+            <!--  -->
+        </div>
+        <!--id="corpo"-->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+-0
+-1
+-2
+- #### CORPO FIM #### --> 
+<!-- 
+-0
+-1
+-2    
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--> 
+
+
+<script type="text/javascript">
+function printDiv(divID) {
+   var body = document.body.innerHTML;
+   var conteudo = document.getElementById(divID).innerHTML;
+   
+   document.body.innerHTML = conteudo;
+   
+   window.print();
+   
+   document.body.innerHTML = body;
+}
+
+function letra( id ) {
+    var valor_inicial = "120%";
+    document.getElementById( id ).style.fontSize = valor_inicial;
+}
+
+function tamanhofonte( op, id ) {
+    var incremento = 2;  
+    var local_alterado = document.getElementById( id ).style.fontSize;
+    local_alterado = parseInt(local_alterado.replace(/%/,""));
+
+    switch( op ) {
+        
+        case "mais": local_alterado += incremento; break;
+            case "menos": local_alterado -= incremento; break;
+                case "padrao": local_alterado = "120"; break;
+    }
+    
+    document.getElementById( id ).style.fontSize = local_alterado + '%';
+}
+</script> 
+
+
+    </body>
+</html>

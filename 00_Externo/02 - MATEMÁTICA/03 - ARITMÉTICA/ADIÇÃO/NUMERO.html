@@ -1,0 +1,146 @@
+<html>
+    
+    <head>
+        
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">       
+    </head>
+    
+    <body onload='letra(&apos;corpo&apos;);'
+        style="
+            font:normal 120% verdana,arial,helvetica; width: 100%; height: 100%; padding: 0; margin: 0;
+        " 
+    >
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+-0
+-1
+-2
+- #### CORPO FIM #### --> 
+<!-- 
+-0
+-1
+-2    
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--> 
+        <div id="corpo" style="font:normal 120% verdana,arial,helvetica;">
+            
+            <h1 align="center" style="font:bold 150% verdana,arial,helvetica;">Matemática - Adição - Número </h1>
+            
+            <!--  -->
+            <div style="margin-left: 20px;
+                 font:normal 100% verdana,arial,helvetica;
+                 ">  
+            <!--  -->    
+                <p>O conceito de número na sua forma mais simples é claramente abstrata e intuitiva.</p>
+                       
+                <p>Número é um objeto da matemática usado para descrever quantidade, ordem ou medida.</p>
+            
+                <ul>
+                    <li> 
+                        <p>O conceito de número provavelmente foi um dos primeiros conceitos matemáticos 
+                            assimilados pela humanidade no processo de contagem.</p>
+                    </li>
+                    <li> 
+                        <p>Para isto, os números naturais eram um bom começo.</p>
+                    </li>
+                </ul>
+                
+                <p>Em todas as épocas da evolução humana, mesmo nas mais atrasadas, encontra-se no homem o 
+                    sentido do número. </p>
+                
+                <p>Esta faculdade lhe permite reconhecer que algo muda em uma pequena coleção (por exemplo, 
+                    seus filhos, ou suas ovelhas) quando, sem seu conhecimento direto, um objeto tenha sido 
+                    retirado ou acrescentado.</p>
+                
+                <h2 style="font:bold 120% verdana,arial,helvetica; color:#8080FF;">Exemplo</h2>
+            
+                <div style="margin-left: 40px; 
+                     font:normal 100% verdana,arial,helvetica;
+                     background: #EEEEFF; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">  
+                      
+                    É possível chegar a uma ideia clara e lógica de número sem recorrer a contagem. 
+                    Utilizando a correspondência biunívoca.
+                    <br>           
+                </div>
+                
+                <p>A correspondência biunívoca resume-se numa operação de "fazer corresponder". Pode-se dizer 
+                    que a contagem se realiza fazendo corresponder a cada objeto da coleção (conjunto), um 
+                    número que pertence à sucessão natural: 1,2,3...</p>
+                
+                <p>A gente aponta para um objeto e diz: um; aponta para outro e diz: dois; e assim 
+                    sucessivamente até esgotar os objetos da coleção;</p>
+                
+                <div style="width: 100%;">  
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0"> 
+                        <tr><td align="center">
+                                <img width="491" height="208" title="Correspondência Biunívoca" 
+                                     src="NUMERO_IMAGENS/correspondência_biunivoca.png">  
+                        </td></tr>
+                    </table>
+                </div>
+                
+                <h2 style="font:bold 120% verdana,arial,helvetica; color:#8080FF;">O número sem contagem:</h2>
+                
+                <ul>
+                    <li> 
+                        <p>Utilizando correspondência biunívoca é que pastores sabiam no final do dia se no 
+                            seu rebanho estava faltando ou sobrando alguma ovelha.</p>
+                    </li>
+                </ul>
+                                                
+                <p>&nbsp;</p>
+                 
+            <!--  -->
+            </div>
+            <!--  -->
+        </div>
+        <!--id="corpo"-->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+-0
+-1
+-2
+- #### CORPO FIM #### --> 
+<!-- 
+-0
+-1
+-2    
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--> 
+
+
+<script type="text/javascript">
+function printDiv(divID) {
+   var body = document.body.innerHTML;
+   var conteudo = document.getElementById(divID).innerHTML;
+   
+   document.body.innerHTML = conteudo;
+   
+   window.print();
+   
+   document.body.innerHTML = body;
+}
+
+function letra( id ) {
+    var valor_inicial = "120%";
+    document.getElementById( id ).style.fontSize = valor_inicial;
+}
+
+function tamanhofonte( op, id ) {
+    var incremento = 2;  
+    var local_alterado = document.getElementById( id ).style.fontSize;
+    local_alterado = parseInt(local_alterado.replace(/%/,""));
+
+    switch( op ) {
+        
+        case "mais": local_alterado += incremento; break;
+            case "menos": local_alterado -= incremento; break;
+                case "padrao": local_alterado = "120"; break;
+    }
+    
+    document.getElementById( id ).style.fontSize = local_alterado + '%';
+}
+</script> 
+
+
+    </body>
+</html>

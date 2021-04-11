@@ -1,0 +1,139 @@
+<html>
+    
+    <head>
+        
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">       
+    </head>
+    
+    <body onload='letra(&apos;corpo&apos;);'
+        style="
+            font:normal 120% verdana,arial,helvetica;
+            width: 100%; height: 100%; padding: 0; margin: 0;
+        " 
+    >   
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+-0
+-1
+-2
+- #### CORPO FIM #### --> 
+<!-- 
+-0
+-1
+-2    
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--> 
+        <div id="corpo">
+            
+            <h1 align="center" style="font:bold 150% verdana,arial,helvetica;">Matemática Aritmética</h1>
+            
+            <!--  -->
+            <div style="margin-left: 20px;
+                 font:normal 100% verdana,arial,helvetica;
+                 ">  
+            <!--  -->    
+                <p>A aritmética é a base de toda a matemática. Sem ela, a álgebra e a geometria seriam 
+                    inviáveis.</p>
+                                            
+                <p>Por ser a base, ela é feita toda com os <b>números naturais</b>, aqueles que aprendemos naturalmente quando crianças</p>
+                
+                <p>É o ramo mais antigo e mais elementar da matemática, usado por quase todos, seja em tarefas 
+                    do cotidiano, em cálculos científicos ou de negócios.</p>
+                
+                <h2 style="font:bold 120% verdana,arial,helvetica; color:#8080FF;">Definição:</h2>
+                
+                <div style="margin-left: 40px; 
+                     font:normal 100% verdana,arial,helvetica;
+                     background: #EEEEFF; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">  
+                      
+                    Aritmética é o ramo da matemática que lida com números e com as operações possíveis 
+                    entre eles.
+                </div>
+                
+                <p>Operações Aritméticas:</p>
+
+                <ul>
+                    <li> 
+                        <p>Adição.</p>
+                    </li>
+                    <li> 
+                        <p>Subtração.</p>
+                    </li>
+                    <li> 
+                        <p>Multiplicação.</p>
+                    </li>
+                    <li> 
+                        <p>Divisão.</p>
+                    </li>
+                    <li> 
+                        <p>Porcentagem.</p>
+                    </li>
+                    <li> 
+                        <p>Potenciação.</p>
+                    </li>
+                    <li> 
+                        <p>Radiciação.</p>
+                    </li>
+                    <li> 
+                        <p>Logaritmo.</p>
+                    </li>
+                </ul>                          
+                                
+                <p>A consideração conjunta de todas estas operações é conhecida como cálculo aritmético.</p>
+                                
+                <p>&nbsp;</p>
+                 
+            <!--  -->
+            </div>
+            <!--  -->
+        </div>
+        <!--id="corpo"-->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+-0
+-1
+-2
+- #### CORPO FIM #### --> 
+<!-- 
+-0
+-1
+-2    
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--> 
+
+
+<script type="text/javascript">
+function printDiv(divID) {
+   var body = document.body.innerHTML;
+   var conteudo = document.getElementById(divID).innerHTML;
+   
+   document.body.innerHTML = conteudo;
+   
+   window.print();
+   
+   document.body.innerHTML = body;
+}
+
+function letra( id ) {
+    var valor_inicial = "120%";
+    document.getElementById( id ).style.fontSize = valor_inicial;
+}
+
+function tamanhofonte( op, id ) {
+    var incremento = 2;  
+    var local_alterado = document.getElementById( id ).style.fontSize;
+    local_alterado = parseInt(local_alterado.replace(/%/,""));
+
+    switch( op ) {
+        
+        case "mais": local_alterado += incremento; break;
+            case "menos": local_alterado -= incremento; break;
+                case "padrao": local_alterado = "120"; break;
+    }
+    
+    document.getElementById( id ).style.fontSize = local_alterado + '%';
+}
+</script> 
+
+
+    </body>
+</html>

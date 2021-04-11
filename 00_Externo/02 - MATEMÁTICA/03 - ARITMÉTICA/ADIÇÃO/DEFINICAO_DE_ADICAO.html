@@ -1,0 +1,107 @@
+<html>
+    
+    <head>
+        
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">       
+    </head>
+    
+    <body onload='letra(&apos;corpo&apos;);'
+        style="
+            font:normal 120% verdana,arial,helvetica;
+            width: 100%; height: 100%; padding: 0; margin: 0;
+        " 
+    >
+ 
+
+        <div id="corpo">
+            
+            <h1 align="center" style="font:bold 150% verdana,arial,helvetica;">Matemática - Adição - Definição </h1>
+            
+            <!--  -->
+            <div style="margin-left: 20px;
+                 font:normal 100% verdana,arial,helvetica;
+                 ">  
+            <!--  -->    
+                <p>O vocábulo latino additĭo chegou à nossa língua como adição. Trata-se do ato e do resultado de somar, complementar ou 
+                    agregar algo.</p>
+                                            
+                <p>Adição pode usar-se como sinónimo de soma: a operação aritmética que consiste em acrescentar quantidades até 
+                    obter um resultado.</p>
+            
+                <p>Uma <em>soma </em>(do latim summa) é a junção de coisas.</p>
+            
+                <ul>
+                    <li> 
+                        <p>O processo também permite reunir dois grupos de coisas para obter um único conjunto.</p>
+                    </li>
+                    <li> 
+                        <p>A soma dos conjuntos infinitos não tem fim.</p>
+                    </li>
+                </ul>
+                
+                <h2 style="font:bold 120% verdana,arial,helvetica; color:#8080FF;">Diferença entre Adição e Soma</h2>
+            
+                <div style="margin-left: 40px; 
+                     font:normal 100% verdana,arial,helvetica;
+                     background: #EEEEFF; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">  
+                      
+                    Adição é a ação de adicionar ou de acrescentar alguma coisa.
+                    <br>           
+                    Soma é a operação que acresenta quantidades.
+                </div>
+                 
+            <!--  -->
+            </div>
+            <!--  -->
+        </div>
+        <!--id="corpo"-->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+-0
+-1
+-2
+- #### CORPO FIM #### --> 
+<!-- 
+-0
+-1
+-2    
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--> 
+
+
+<script type="text/javascript">
+function printDiv(divID) {
+   var body = document.body.innerHTML;
+   var conteudo = document.getElementById(divID).innerHTML;
+   
+   document.body.innerHTML = conteudo;
+   
+   window.print();
+   
+   document.body.innerHTML = body;
+}
+
+function letra( id ) {
+    var valor_inicial = "120%";
+    document.getElementById( id ).style.fontSize = valor_inicial;
+}
+
+function tamanhofonte( op, id ) {
+    var incremento = 2;  
+    var local_alterado = document.getElementById( id ).style.fontSize;
+    local_alterado = parseInt(local_alterado.replace(/%/,""));
+
+    switch( op ) {
+        
+        case "mais": local_alterado += incremento; break;
+            case "menos": local_alterado -= incremento; break;
+                case "padrao": local_alterado = "120"; break;
+    }
+    
+    document.getElementById( id ).style.fontSize = local_alterado + '%';
+}
+</script> 
+
+
+    </body>
+</html>

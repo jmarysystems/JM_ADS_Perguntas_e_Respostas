@@ -1,0 +1,16 @@
+{
+  "name": "JM_000_Perguntas_e_Respostas",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "stack": "heroku-18",
+  "buildpacks": [
+
+  ]
+}

@@ -1,0 +1,310 @@
+!function(root, factory) {
+    if ("object" === typeof exports && "object" === typeof module) module.exports = factory(); else if ("function" === typeof define && define.amd) define("authenticator", [], factory); else if ("object" === typeof exports) exports.authenticator = factory(); else root.Kloudless = root.Kloudless || {}, 
+    root.Kloudless.authenticator = factory();
+}("undefined" !== typeof self ? self : this, function() {
+    return function(modules) {
+        function __webpack_require__(moduleId) {
+            if (installedModules[moduleId]) return installedModules[moduleId].exports;
+            var module = installedModules[moduleId] = {
+                i: moduleId,
+                l: false,
+                exports: {}
+            };
+            modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+            module.l = true;
+            return module.exports;
+        }
+        var installedModules = {};
+        __webpack_require__.m = modules;
+        __webpack_require__.c = installedModules;
+        __webpack_require__.d = function(exports, name, getter) {
+            if (!__webpack_require__.o(exports, name)) Object.defineProperty(exports, name, {
+                configurable: false,
+                enumerable: true,
+                get: getter
+            });
+        };
+        __webpack_require__.n = function(module) {
+            var getter = module && module.__esModule ? function() {
+                return module.default;
+            } : function() {
+                return module;
+            };
+            __webpack_require__.d(getter, "a", getter);
+            return getter;
+        };
+        __webpack_require__.o = function(object, property) {
+            return Object.prototype.hasOwnProperty.call(object, property);
+        };
+        __webpack_require__.p = "";
+        return __webpack_require__(__webpack_require__.s = 0);
+    }([ function(module, exports, __webpack_require__) {
+        "use strict";
+        Object.defineProperty(exports, "__esModule", {
+            value: true
+        });
+        __webpack_require__(1);
+        var _authWidget = __webpack_require__(2);
+        exports.default = _authWidget.auth;
+    }, function(module, exports, __webpack_require__) {
+        "use strict";
+        if (!window.Event.prototype.preventDefault) window.Event.prototype.preventDefault = function() {
+            this.returnValue = false;
+        };
+        if (!Element.prototype.addEventListener) {
+            var eventListeners = [];
+            var addEventListener = function(type, listener) {
+                var self = this;
+                var wrapper = function(e) {
+                    e.target = e.srcElement;
+                    e.currentTarget = self;
+                    if (listener.handleEvent) listener.handleEvent(e); else listener.call(self, e);
+                };
+                this.attachEvent("on" + type, wrapper);
+                eventListeners.push({
+                    object: this,
+                    type: type,
+                    listener: listener,
+                    wrapper: wrapper
+                });
+            };
+            var removeEventListener = function(type, listener) {
+                var counter = 0;
+                while (counter < eventListeners.length) {
+                    var eventListener = eventListeners[counter];
+                    if (eventListener.object === this && eventListener.type === type && eventListener.listener === listener) {
+                        this.detachEvent("on" + type, eventListener.wrapper);
+                        break;
+                    }
+                    counter += 1;
+                }
+            };
+            Element.prototype.addEventListener = addEventListener;
+            Element.prototype.removeEventListener = removeEventListener;
+            if (window.HTMLDocument) {
+                window.HTMLDocument.prototype.addEventListener = addEventListener;
+                window.HTMLDocument.prototype.removeEventListener = removeEventListener;
+            }
+            if (window.Window) {
+                window.Window.prototype.addEventListener = addEventListener;
+                window.Window.prototype.removeEventListener = removeEventListener;
+            }
+        }
+    }, function(module, exports, __webpack_require__) {
+        "use strict";
+        function load(url, headers, callback) {
+            var xhr = void 0;
+            if ("undefined" !== typeof XMLHttpRequest) xhr = new XMLHttpRequest(); else {
+                var versions = [ "MSXML2.XmlHttp.5.0", "MSXML2.XmlHttp.4.0", "MSXML2.XmlHttp.3.0", "MSXML2.XmlHttp.2.0", "Microsoft.XmlHttp" ];
+                for (var i = 0, len = versions.length; i < len; i += 1) try {
+                    xhr = new ActiveXObject(versions[i]);
+                    break;
+                } catch (e) {}
+            }
+            xhr.onreadystatechange = function() {
+                if (4 === xhr.readyState) callback(xhr);
+            };
+            xhr.open("GET", url, true);
+            if (headers && xhr.setRequestHeader) Object.keys(headers).forEach(function(k) {
+                xhr.setRequestHeader(k, headers[k]);
+            });
+            xhr.send("");
+        }
+        Object.defineProperty(exports, "__esModule", {
+            value: true
+        });
+        var baseUrl = "https://kloudless.blackboardcdn.com";
+        var authenticators = {};
+        var authenticatorsByElement = {};
+        var authenticatorIframe = void 0;
+        var popup = void 0;
+        var nav = navigator.userAgent.toLowerCase();
+        var isIE = false;
+        if (-1 !== nav.indexOf("msie")) {
+            isIE = true;
+            parseInt(nav.split("msie")[1], 10);
+        } else if (-1 !== nav.indexOf("trident/")) {
+            isIE = true;
+            parseInt(nav.split("rv:")[1], 10);
+        }
+        window.addEventListener("message", function(message) {
+            if (false) console.log("[DEBUG] Message received", message);
+            if ("string" !== typeof message.data || 0 !== message.data.indexOf("kloudless:")) return;
+            if (message.origin !== baseUrl) {
+                console.log("[ERROR] Origin mismatch:", message);
+                return;
+            }
+            var contents = JSON.parse(message.data.substring("kloudless:".length));
+            if ("authentication" !== contents.type) {
+                console.log("[ERROR] Incorrect content type:", message);
+                return;
+            }
+            setTimeout(function() {
+                var auth = authenticators[contents.id];
+                if (auth) auth.callback(contents.data); else console.log("[ERROR] No Authenticator found for ID:", contents.id);
+            }, 0);
+            if (isIE) message.source.postMessage("kloudless:" + JSON.stringify({
+                type: "close"
+            }), message.origin); else if (popup) {
+                popup.close();
+                popup = void 0;
+            }
+            if (false) console.log("[DEBUG] Confirmation sent", message.origin);
+        }, false);
+        var servicesPathFromParams = function(params) {
+            var path = "/services/";
+            if ("string" === typeof params.services) params.services = [ params.services ];
+            if (void 0 === params.services) path += "?"; else if (1 === params.services.length) path += params.services[0] + "?"; else if (params.services.length > 1) path += "?services=" + params.services.map(function(e) {
+                return e.trim();
+            }).join(",") + "&";
+            path += "app_id=" + params.app_id + "&admin=" + (params.admin ? 1 : "") + "&extra=" + (params.extra ? params.extra : "") + "&callback=&retrieve_account_key=";
+            if (params.group) path += "&group=" + params.group;
+            if (params.edit_account) path += "&edit_account=" + params.edit_account;
+            if (params.developer) path += "&developer=true";
+            return path;
+        };
+        var oauthPathFromParams = function(params) {
+            var path = "/v1/oauth/?";
+            params.redirect_uri = "urn:ietf:wg:oauth:2.0:oob";
+            params.response_type = "token";
+            params.state = parseInt(Math.random() * Math.pow(10, 10), 10);
+            Object.keys(params).forEach(function(key) {
+                var val = params[key];
+                if ("scopes" === key && val.join) val = val.join(" ");
+                path += "&" + key + "=" + val;
+            });
+            return path;
+        };
+        var addIframe = function() {
+            if (void 0 !== authenticatorIframe) return;
+            var iframe = document.createElement("iframe");
+            iframe.setAttribute("id", "kloudless_iexd");
+            iframe.setAttribute("src", baseUrl + "/static/iexd.html");
+            iframe.style.display = "none";
+            document.getElementsByTagName("body")[0].appendChild(iframe);
+            authenticatorIframe = iframe;
+        };
+        var wrapServicesCallback = function(callback) {
+            return function(data) {
+                callback(null, data);
+            };
+        };
+        var wrapOAuthCallback = function(callback, state) {
+            return function(data) {
+                if (!data.state || data.state.toString() !== state.toString()) return callback({
+                    error: "invalid_state"
+                });
+                if (!data.access_token) return callback(data);
+                var headers = {
+                    Authorization: "Bearer " + data.access_token,
+                    "X-Kloudless-Source": "authenticator"
+                };
+                load(baseUrl + "/v1/oauth/token/", headers, function(tokenXHR) {
+                    if (200 !== tokenXHR.status) callback(data);
+                    var accountID = JSON.parse(tokenXHR.responseText).account_id;
+                    load(baseUrl + "/v1/accounts/" + accountID + "/?retrieve_full=False", headers, function(accountXHR) {
+                        if (200 === accountXHR.status) data.account = JSON.parse(accountXHR.responseText);
+                        callback(data);
+                    });
+                });
+            };
+        };
+        var stop = function(element) {
+            if (void 0 !== window.jQuery && element instanceof window.jQuery) element = element.get(0);
+            var authID = authenticatorsByElement[element.outerHTML];
+            if (authID) {
+                var _auth = authenticators[authID];
+                element.removeEventListener("click", _auth.clickHandler);
+                delete authenticators[authID];
+                delete authenticatorsByElement[element.outerHTML];
+            } else console.log("No click listener found to remove.");
+        };
+        var authenticator = function(element, params, callback) {
+            if (window.Kloudless && window.Kloudless.baseUrl) baseUrl = window.Kloudless.baseUrl;
+            if (params && params.base_url) baseUrl = params.base_url;
+            addIframe();
+            if (void 0 !== window.jQuery && element instanceof window.jQuery) element = element.get(0);
+            if (element && !(element instanceof Element)) {
+                if (callback) throw new Error("'element' must be an Element or jQuery object.");
+                callback = params;
+                params = element;
+                element = null;
+            }
+            if (!params.client_id && !params.app_id) throw new Error("An App ID is required.");
+            var path = void 0;
+            if (params.app_id) {
+                path = servicesPathFromParams(params);
+                callback = wrapServicesCallback(callback);
+            } else {
+                path = oauthPathFromParams(params);
+                callback = wrapOAuthCallback(callback, params.state);
+            }
+            var requestId = parseInt(Math.random() * Math.pow(10, 10), 10);
+            var origin = window.location.protocol + "//" + window.location.host;
+            path += "&request_id=" + requestId;
+            path += "&origin=" + encodeURIComponent(origin);
+            if (params && "onedrivebiz" === params.scope) path += "&" + encodeURIComponent("raw[prompt]") + "=login";
+            if (false) console.log("[DEBUG]", "Path is", baseUrl + path);
+            var clickHandler = function() {
+                var top = (screen.height - 500) / 2 - 50;
+                var left = (screen.width - 700) / 2;
+                var popupParams = "resizable,scrollbars,status,height=500,width=700,top=" + top + ",left=" + left;
+                if (isIE) {
+                    var data = {
+                        type: "prepareToOpenAuthenticator",
+                        url: baseUrl + path,
+                        params: popupParams
+                    };
+                    var iframe = authenticatorIframe;
+                    iframe.contentWindow.postMessage("kloudless:" + JSON.stringify(data), iframe.src);
+                    iframe.style.position = "fixed";
+                    iframe.style.display = "block";
+                    iframe.style.height = "100%";
+                    iframe.style.width = "100%";
+                    iframe.style.top = "0";
+                    iframe.style.bottom = "0";
+                    iframe.style.left = "0";
+                    iframe.style.right = "0";
+                    var op = 1;
+                    var timer = setInterval(function() {
+                        if (op <= .75) {
+                            clearInterval(timer);
+                            iframe.style.display = "none";
+                        }
+                        iframe.style.opacity = op;
+                        iframe.style.filter = "alpha(opacity=" + 100 * op + ")";
+                        op -= .01 * op;
+                    }, 120);
+                } else {
+                    popup = window.open(baseUrl + path, "kPOPUP", popupParams);
+                    popup.focus();
+                }
+            };
+            if (element && void 0 !== authenticatorsByElement[element.outerHTML]) stop(element);
+            authenticators[requestId] = {
+                clickHandler: clickHandler,
+                callback: callback
+            };
+            if (element) {
+                authenticatorsByElement[element.outerHTML] = requestId;
+                element.addEventListener("click", clickHandler);
+            }
+            return {
+                launch: clickHandler
+            };
+        };
+        var defaultExport = {
+            authenticator: authenticator,
+            stop: stop,
+            apiVersion: "v1",
+            baseUrl: baseUrl
+        };
+        setTimeout(function() {
+            if (window.Kloudless && window.Kloudless.authenticator) Object.keys(defaultExport).forEach(function(key) {
+                if (!window.Kloudless[key]) window.Kloudless[key] = defaultExport[key];
+            });
+        }, 0);
+        exports.auth = authenticator;
+        exports.default = defaultExport;
+    } ]).default;
+});
